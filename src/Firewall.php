@@ -265,7 +265,9 @@ class Firewall
         if ($ip) {
             $this->ip = $ip;
         } elseif (!$this->ip) {
-            if ($ip = $this->request->server('HTTP_CF_CONNECTING_IP')) {
+            if ($ip = $this->request->server('HTTP_X_VAPOR_SOURCE_IP')) {
+                $this->ip = $ip;
+            } elseif ($ip = $this->request->server('HTTP_CF_CONNECTING_IP')) {
                 $this->ip = $ip;
             } elseif ($ip = $this->request->server->get('HTTP_X_FORWARDED_FOR')) {
                 $this->ip = $ip;
